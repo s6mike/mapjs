@@ -32,13 +32,13 @@ const MAPJS = require('../src/npm-main'),
 					mapModel.setAttachment(
 						'attachmentEditorWidget',
 						nodeId, {
-							contentType: 'text/html',
-							content: window.prompt('attachment', attachment && attachment.content)
-						});
+						contentType: 'text/html',
+						content: window.prompt('attachment', attachment && attachment.content)
+					});
 				});
 			});
 		};
-		window.onerror = window.alert;
+		window.onerror = console.error;
 		window.jQuery = jQuery;
 
 		container.domMapWidget(console, mapModel, touchEnabled);
@@ -53,6 +53,7 @@ const MAPJS = require('../src/npm-main'),
 		//jQuery('#themecss').themeCssWidget(themeProvider, new MAPJS.ThemeProcessor(), mapModel, domMapController);
 		// activityLog, mapModel, touchEnabled, imageInsertController, dragContainer, centerSelectedNodeOnOrientationChange
 
+		jQuery('body').mapToolbarWidget(mapModel);
 		jQuery('body').attachmentEditorWidget(mapModel);
 		layoutThemeStyle(themeJson);
 		mapModel.setIdea(idea);

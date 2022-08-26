@@ -165,7 +165,7 @@ module.exports = function content(contentAggregate, initialSessionId) {
 			return contentAggregate.id == ideaId ? contentAggregate : contentAggregate.findSubIdeaById(ideaId); //eslint-disable-line eqeqeq
 		},
 		sameSideSiblingRanks = function (parentIdea, ideaRank) {
-			return _(_.map(_.keys(parentIdea.ideas), parseFloat)).reject(function (k) {
+			return _.reject((_.map(_.keys(parentIdea.ideas), parseFloat)), function (k) {
 				return k * ideaRank < 0;
 			});
 		},
