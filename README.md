@@ -19,6 +19,16 @@ Then open <http://localhost:9000/> to view the example map.
 
 MapJS 2 works well with WebPack. Check out the [MAPJS Webpack Example](https://github.com/mindmup/mapjs-webpack-example) project.
 
+Or just use: `npm run pack`
+
+## Using MAPJS with argmap
+
+argmap integrates with MAPJS:
+
+[argmap](https://github.com/s6mike/argmap/tree/master)
+
+Though currently, most of this integration is not on the main branch.
+
 ## Testing
 
 To run the unit tests, execute

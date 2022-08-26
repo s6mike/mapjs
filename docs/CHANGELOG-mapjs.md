@@ -1,5 +1,30 @@
 # Mapjs Project Change Log
 
+## mapjs 4.0.0
+
+- Align with argmap changes (v4.3.0): BREAKING
+  - Restructure folder so inputs and outputs logically separated:
+    - `mapjs/test/`:
+    - Move website dependencies to `site/`:
+      - Move `/mapjs-default-styles.css`
+        - `mapjs/scripts/mapjs.env`:
+          - Update env variables for css path.
+          - Add variables for other paths including devtools recordings.
+      - Move all svg files to `site/svg/`.
+    - Move js source files to `src/`:
+      - Move `theme.js` and `themes/`.
+        - `mapjs/src/start.js`:
+          - Update reference to `theme.js`.
+          - Also change console.log to console.error for catching JSON load errors.
+    - `mapjs/webpack.config.js`: Create bundle.js in `site/js/` instead.
+  - Move `test/start.js` to `src/start.js` since it's a source file.
+  - `package.json`: Add  "type": "commonjs".
+  - Remove references to `src/example-map.json` from `src/start.js`
+  - Delete since no longer needed:
+    - `test/example-map.json`
+    - `mapjs/test/index.html`
+- Using VSCode defaults for file formatting: many whitespace changes.
+
 ## mapjs 3.3.20
 
 - Add jasmine test outputs to `docs/` folder.
@@ -71,7 +96,7 @@
 ## mapjs 3.3.8
 
 - Merge fixes from stash 'All mapjs fixes up to toolbar': just a settings.json with bash terminal init file.
-- Add 'scripts/mapsjs.env' to hold new environment variables: PATH_LOG_FILE_EXPECT, PATH_REPLAY_SCRIPT, PATH_REPLAY_SCRIPT_ADD_IDEA, PATH_BISECT_PATCH_FILE
+- Add 'scripts/mapjs.env' to hold new environment variables: PATH_LOG_FILE_EXPECT, PATH_REPLAY_SCRIPT, PATH_REPLAY_SCRIPT_ADD_IDEA, PATH_BISECT_PATCH_FILE
 
 ## mapjs 3.3.7
 
