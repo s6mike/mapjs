@@ -1,5 +1,10 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.8
+
+- Merge fixes from stash 'All mapjs fixes up to toolbar': just a settings.json with bash terminal init file.
+- Add 'scripts/mapsjs.env' to hold new environment variables: PATH_LOG_FILE_EXPECT, PATH_REPLAY_SCRIPT, PATH_REPLAY_SCRIPT_ADD_IDEA, PATH_BISECT_PATCH_FILE
+
 ## mapjs 3.3.7
 
 - `docs/CHANGELOG-mapjs.md`: Clean up history.
@@ -8,7 +13,7 @@
 
 - Version 3.4.0 because latest mapjs tag is 3.3.6
 - Add cumulative mapjs bugfixes:
-- Fix add parent reason issue:
+  - Fix add parent reason issue.
   - `test/start.js`: Errors sent to console.error, rather than alert which was incredibly annoying!
   - Fix toolbar buttons by restoring `src/browser/map-toolbar-widget` related code which was removed in commit 'initial jquery 3 migration' (`b2768ac`).
   - `src/core/content/content.js`: Fix reject call syntax which caused unrecognised function '_' error.
@@ -24,4 +29,4 @@
 
 ----------------
 
-Uses [Semantic Versioning 2.0.0](https://semver.org/) and [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
+Uses [Semantic Versioning 2.0.0](https://semver.org/) and [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
