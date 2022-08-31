@@ -2,6 +2,7 @@
   "name": "@mindmup/mapjs",
   "license": "MIT",
   "description": "Mind mapping visualisation library, using SVG, developed for MindMup",
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/mindmup/mapjs.git"
@@ -20,11 +21,12 @@
   "homepage": "https://www.mindmup.com",
   "version": "4.1.0",
   "scripts": {
-    "testc": "npm run test-cafe",
+    "testc": "npm run test-start",
     "test-start": "npm run start && npm run test-cafe",
     "stop": "killall node",
-    "start": "npm run pack && webpack-dev-server &",
-    "test-cafe": "testcafe 'chrome:headless --no-default-browser-check' /home/s6mike/git_projects/argmap/test/devtools-recordings/Add_supporting_group.json",
+    "start": "webpack-dev-server &",
+    "test-cafe": "testcafe 'chrome:headless --no-default-browser-check' /home/s6mike/git_projects/argmap/test/devtools-recordings/add_supporting_group.json",
+    "testcafe-command": "testcafe",
     "pack": "webpack",
     "pretest": "eslint specs src && rm -rf testem/compiled",
     "test-core": "node specs/support/jasmine-runner.js",

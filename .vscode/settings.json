@@ -6,7 +6,7 @@
       "args": [
         "--init-file",
         "/home/s6mike/git_projects/argmap/scripts/bash_aliases_mapjs.sh",
-      ]
+      ],
     },
     "zsh": {
       "path": "zsh"

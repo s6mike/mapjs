@@ -1,5 +1,9 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.10
+
+- Align with argmap changes.
+
 ## mapjs 3.3.9
 
 - `src/core/map-model.js`: Fix left click on node to select (introduced in commit 'moved addLinkMode out of mapModel' 354071624edb6c257441fcdfcb3f11ab92ad395e).
