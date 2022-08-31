@@ -1,5 +1,10 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.9
+
+- `src/core/map-model.js`: Fix left click on node to select (introduced in commit 'moved addLinkMode out of mapModel' 354071624edb6c257441fcdfcb3f11ab92ad395e).
+  - Relevant function `clickNode` triggered by `mouseup`: `button` value wasn't used, so test `which` value instead.
+
 ## mapjs 3.3.8
 
 - Merge fixes from stash 'All mapjs fixes up to toolbar': just a settings.json with bash terminal init file.
@@ -12,13 +17,14 @@
 ## mapjs 3.3.6
 
 - Version 3.4.0 because latest mapjs tag is 3.3.6
+- Add this Change Log file.
 - Add cumulative mapjs bugfixes:
   - Fix add parent reason issue.
   - `test/start.js`: Errors sent to console.error, rather than alert which was incredibly annoying!
   - Fix toolbar buttons by restoring `src/browser/map-toolbar-widget` related code which was removed in commit 'initial jquery 3 migration' (`b2768ac`).
   - `src/core/content/content.js`: Fix reject call syntax which caused unrecognised function '_' error.
 - `package.json`:
-  - Add testcafe module for automated testing using chrome devtools recordings.
+  - Add TestCafe module for automated testing using chrome devtools recordings.
   - Add alias script keys to align with npm lifecycle as described in: <https://docs.npmjs.com/cli/v8/using-npm/scripts>
 - Update .gitignore
 - Add `package-lock.json` to repo.
