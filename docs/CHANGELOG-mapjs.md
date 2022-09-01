@@ -1,5 +1,12 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.11
+
+- `scripts/mapjs.env`:
+  - Add `PATH_REPLAY_SCRIPT_BUTTON_UNDO_REDO` and `PATH_REPLAY_SCRIPT_KEYS_UNDO_REDO` for new devtools recording.
+  - Update diff file name in variable.
+  - Update destination folder for expect path variable.
+
 ## mapjs 3.3.10
 
 - Align with argmap changes.
