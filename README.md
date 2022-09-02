@@ -1,5 +1,4 @@
-MindMup MapJs
-=============
+# MindMup MapJs
 
 MindMup is a zero-friction mind map canvas. Our aim is to create the most productive mind mapping environment out there, removing all the distractions and providing powerful editing shortcuts.
 
@@ -9,7 +8,7 @@ mind maps in a browser. You can see an example of this live at [mindmup.com](htt
 This project is relatively stand alone and you can use it to create a nice mind map visualisation separate from the
 [MindMup Server](https://www.mindmup.com).
 
-# Using MAPJS standalone
+## Using MAPJS standalone
 
 To run the dev server, execute:
 
@@ -17,11 +16,11 @@ To run the dev server, execute:
 
 Then open <http://localhost:9000/> to view the example map.
 
-# Using MAPJS in your projects
+## Using MAPJS in your projects
 
 MapJS 2 works well with WebPack. Check out the [MAPJS Webpack Example](https://github.com/mindmup/mapjs-webpack-example) project.
 
-# Testing
+## Testing
 
 To run the unit tests, execute
 
@@ -31,7 +30,7 @@ To debug and try things out visually, grab the dependencies using:
 
     `npm run pretest`
 
-# Dependencies
+## Dependencies
 
 This library depends on the following projects:
 
@@ -40,3 +39,38 @@ This library depends on the following projects:
 - [JQuery HotKeys](http://jquery.com/)
 - [Hammer.JS JQuery Plugin](http://eightmedia.github.com/hammer.js)
 - [Color JS](https://github.com/harthur/color)
+
+## Keyboard Shortcuts
+
+You can only select one node at a time, selected nodes have a drop shadow. When you add nodes they are added relative to the selected node.
+You can activate multiple nodes at once, these are highlighted with a dotted line. When you delete or toggle nodes, you affect all the active nodes.
+
+|Key Combination|Effect|
+|----------------|---|
+`space` `f2` | Edit node text
+`del` `backspace` | Remove active nodes
+`return`| Add node below
+`shift+return`| Add node above
+`shift+tab`| Add node left
+`tab` `insert` | Add node right
+`down`| Select node below
+`up`| Select node above
+`left`| Select node left
+`right`| Select node right
+`shift+down`| Activate node below
+`shift+up`| Activate node above
+`shift+left`| Activate node left
+`shift+right`| Activate node right
+`meta+down` `ctrl+down` | Move active nodes below
+`meta+up` `ctrl+up`| Move active nodes above
+`meta+right` `ctrl+right` | Move active nodes right
+`meta+left` `ctrl+left` | Move active nodes left
+`f` `/` | Toggle collapse / reveal
+`u` `meta+z` `ctrl+z` | Undo
+`r` `meta+shift+z` `ctrl+shift+z` `meta+y` `ctrl+y`| Redo
+`[`| Activate children
+`{`| Activate node and children
+`=`| Activate sibling nodes
+`.`| Deactivate all but selected node
+`a`| Add / Open attachment
+`i`| Edit icon

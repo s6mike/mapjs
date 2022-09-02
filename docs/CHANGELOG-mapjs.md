@@ -1,9 +1,15 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.13
+
+- `README.md`:
+  - Add table listing keyboard shortcuts.
+  - Fix lint issues (from [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)).
+
 ## mapjs 3.3.12
 
 - `src/browser/dom-map-widget.js`:
-  - Fix undo/redo keyboard shortcuts.
+  - Fix undo/redo keyboard shortcuts, removed in commit 'move undo/redo hotkeys to menus' (9fe20371f6f64051f043f546269227103935abed).
 
 ## mapjs 3.3.11
 
