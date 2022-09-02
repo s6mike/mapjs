@@ -1,5 +1,10 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.12
+
+- `src/browser/dom-map-widget.js`:
+  - Fix undo/redo keyboard shortcuts.
+
 ## mapjs 3.3.11
 
 - `scripts/mapjs.env`:
