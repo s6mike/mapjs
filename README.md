@@ -68,6 +68,9 @@ You can activate multiple nodes at once, these are highlighted with a dotted lin
 `f` `/` | Toggle collapse / reveal
 `u` `meta+z` `ctrl+z` | Undo
 `r` `meta+shift+z` `ctrl+shift+z` `meta+y` `ctrl+y`| Redo
+`meta+plus ctrl+plus z` | Zoom in
+`meta+minus ctrl+minus shift+z` | Zoom out
+`Esc 0 meta+0 ctrl+0` | Reset view / zoom
 `[`| Activate children
 `{`| Activate node and children
 `=`| Activate sibling nodes

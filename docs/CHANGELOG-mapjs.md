@@ -1,8 +1,15 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.14
+
+- `src/browser/dom-map-widget.js`:
+  - Add missing keyboard shortcuts (hotkeyEventHandlers) for zoom in/out/reset, from commit 'connector removed, node removed' (75d00a37c585a0c564ff30b493078db80bc6b40e).
+    - Add comment for copy/cut/paste, since functions have since been removed from codebase.
+    - [README.md](README.md): Add new keyboard shortcuts for zoom.
+
 ## mapjs 3.3.13
 
-- `README.md`:
+- [README.md](README.md):
   - Add table listing keyboard shortcuts.
   - Fix lint issues (from [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)).
 
