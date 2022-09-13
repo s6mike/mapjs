@@ -65,6 +65,10 @@ You can activate multiple nodes at once, these are highlighted with a dotted lin
 `meta+up` `ctrl+up`| Move active nodes above
 `meta+right` `ctrl+right` | Move active nodes right
 `meta+left` `ctrl+left` | Move active nodes left
+`c meta+x ctrl+x` | Cut
+`p meta+v ctrl+v` | Paste
+`y meta+c ctrl+c` | Copy
+`ctrl+shift+v meta+shift+v` | Paste Style
 `f` `/` | Toggle collapse / reveal
 `u` `meta+z` `ctrl+z` | Undo
 `r` `meta+shift+z` `ctrl+shift+z` `meta+y` `ctrl+y`| Redo

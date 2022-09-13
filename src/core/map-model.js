@@ -1,9 +1,10 @@
 /*global require, module */
 const _ = require('underscore'),
+	MemoryClipboard = require('./clipboard'),
 	LayoutModel = require('./layout/layout-model'),
 	observable = require('./util/observable');
 
-module.exports = function MapModel(selectAllTitles, defaultReorderMargin, optional) {
+module.exports = function MapModel(selectAllTitles, clipboardProvider, defaultReorderMargin, optional) {
 	'use strict';
 	let idea,
 		currentLabelGenerator,
@@ -19,8 +20,9 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 
 	const self = this,
 		autoThemedIdeaUtils = (optional && optional.autoThemedIdeaUtils) || require('./content/auto-themed-idea-utils'),
+		clipboard = clipboardProvider || new MemoryClipboard(),
 		reorderMargin = (optional && optional.reorderMargin) || 20,
-		layoutModel = (optional && optional.layoutModel) || new LayoutModel({nodes: {}, connectors: {}}),
+		layoutModel = (optional && optional.layoutModel) || new LayoutModel({ nodes: {}, connectors: {} }),
 		setRootNodePositionsForPrecalculatedLayout = function (contextNode, specificLayout) {
 			const rootIdeas = Object.keys(idea.ideas).map(rank => idea.ideas[rank]),
 				layout = specificLayout || layoutCalculator(idea, contextNode);
@@ -168,7 +170,7 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 				}
 			});
 			if (themeChanged) {
-				layoutCompleteOptions = {themeChanged: true};
+				layoutCompleteOptions = { themeChanged: true };
 			}
 			layoutModel.setLayout(newLayout);
 			if (!self.isInCollapse) {
@@ -503,7 +505,7 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 		self.applyToActivated(function (i) {
 			activeNodes.push(i);
 		});
-		insertIntermediateMultiple(activeNodes, { title: 'group', attr: {group: group, contentLocked: true}});
+		insertIntermediateMultiple(activeNodes, { title: 'group', attr: { group: group, contentLocked: true } });
 	};
 	this.insertIntermediate = function (source) {
 		const activeNodes = [];
@@ -633,7 +635,7 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 		analytic('removeSubIdea', source);
 		if (isInputEnabled) {
 			self.applyToActivated(function (id) {
-				removed  = idea.removeSubIdea(id);
+				removed = idea.removeSubIdea(id);
 			});
 		}
 		return removed;
@@ -814,9 +816,24 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 		analytic('moveRelative', source);
 		if (isInputEnabled) {
 			if (layoutModel.getOrientation() === 'top-down') {
-				options = {ignoreRankSide: true};
+				options = { ignoreRankSide: true };
 			}
 			idea.moveRelative(currentlySelectedIdeaId, relativeMovement, options);
+		}
+	};
+	self.cut = function (source) {
+		const activeNodeIds = [], parents = [];
+		if (!isEditingEnabled) {
+			return false;
+		}
+		analytic('cut', source);
+		if (isInputEnabled) {
+			self.applyToActivated(function (nodeId) {
+				activeNodeIds.push(nodeId);
+				parents.push(idea.findParent(nodeId).id);
+			});
+			clipboard.put(idea.cloneMultiple(activeNodeIds));
+			idea.removeMultiple(activeNodeIds);
 		}
 	};
 	self.contextForNode = function (nodeId) {
@@ -827,12 +844,14 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 			hasPreferredWidth = node && node.attr && node.attr.style && node.attr.style.width,
 			hasPosition = node && node.attr && node.attr.position,
 			isCollapsed = node && node.getAttr('collapsed'),
+			canPaste = node && isEditingEnabled && clipboard && clipboard.get(),
 			isRoot = idea.isRootNode(nodeId);
 		if (node) {
 			return {
 				hasChildren: !!hasChildren,
 				hasSiblings: !!hasSiblings,
 				hasPreferredWidth: !!hasPreferredWidth,
+				canPaste: !!canPaste,
 				hasPreferredPosition: !!hasPosition,
 				notRoot: !isRoot,
 				notLastRoot: !isRoot || (rootCount > 1),
@@ -843,6 +862,47 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 			};
 		}
 
+	};
+	self.copy = function (source) {
+		const activeNodeIds = [];
+		if (!isEditingEnabled) {
+			return false;
+		}
+		analytic('copy', source);
+		if (isInputEnabled) {
+			self.applyToActivated(function (node) {
+				activeNodeIds.push(node);
+			});
+			clipboard.put(idea.cloneMultiple(activeNodeIds));
+		}
+	};
+	self.paste = function (source) {
+		let result;
+		if (!isEditingEnabled) {
+			return false;
+		}
+		analytic('paste', source);
+		if (isInputEnabled) {
+			result = idea.pasteMultiple(currentlySelectedIdeaId, clipboard.get());
+			if (result && result[0]) {
+				self.selectNode(result[0]);
+			}
+		}
+		return result;
+	};
+	self.pasteStyle = function (source) {
+		const clipContents = clipboard.get();
+		let pastingStyle;
+		if (!isEditingEnabled) {
+			return false;
+		}
+		analytic('pasteStyle', source);
+		if (isInputEnabled && clipContents && clipContents[0]) {
+			pastingStyle = clipContents[0].attr && clipContents[0].attr.style;
+			self.applyToActivated(function (id) {
+				idea.updateAttr(id, 'style', pastingStyle);
+			});
+		}
 	};
 	self.getIcon = function (nodeId) {
 		const node = layoutModel.getNode(nodeId || currentlySelectedIdeaId);
@@ -951,7 +1011,7 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 		query = query.toLocaleLowerCase();
 		idea.traverse(function (contentIdea) {
 			if (contentIdea.title && contentIdea.title.toLocaleLowerCase().indexOf(query) >= 0) {
-				result.push({id: contentIdea.id, title: contentIdea.title});
+				result.push({ id: contentIdea.id, title: contentIdea.title });
 			}
 		});
 		return result;
@@ -959,15 +1019,15 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 	//node activation and selection
 	(function () {
 		const applyToNodeDirection = function (source, analyticTag, method, direction) {
-				if (!isInputEnabled) {
-					return;
-				}
-				analytic(analyticTag, source);
-				const relId = layoutModel['nodeId' + direction](currentlySelectedIdeaId);
-				if (relId) {
-					method.apply(self, [relId]);
-				}
-			},
+			if (!isInputEnabled) {
+				return;
+			}
+			analytic(analyticTag, source);
+			const relId = layoutModel['nodeId' + direction](currentlySelectedIdeaId);
+			if (relId) {
+				method.apply(self, [relId]);
+			}
+		},
 			applyFuncs = {};
 
 		['Left', 'Right', 'Up', 'Down'].forEach(function (direction) {
@@ -1077,12 +1137,12 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 
 	self.getNodeIdAtPosition = function (x, y) {
 		const isPointOverNode = function (node) { //move to mapModel candidate
-				/*jslint eqeq: true*/
-				return x >= node.x &&
-					y >= node.y &&
-					x <= node.x + node.width &&
-					y <= node.y + node.height;
-			},
+			/*jslint eqeq: true*/
+			return x >= node.x &&
+				y >= node.y &&
+				x <= node.x + node.width &&
+				y <= node.y + node.height;
+		},
 			node = _.find(layoutModel.getLayout().nodes, isPointOverNode);
 		return node && node.id;
 	};
@@ -1255,14 +1315,14 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 	self.setThemeSource = function (newThemeSource) {
 		themeSource = newThemeSource;
 	};
-	self.dropImage =  function (dataUrl, imgWidth, imgHeight, x, y, metaData) {
+	self.dropImage = function (dataUrl, imgWidth, imgHeight, x, y, metaData) {
 		const dropOn = function (ideaId, position) {
-				const scaleX = Math.min(imgWidth, 300) / imgWidth,
-					scaleY = Math.min(imgHeight, 300) / imgHeight,
-					scale = Math.min(scaleX, scaleY),
-					existing = idea.getAttrById(ideaId, 'icon');
-				self.setIcon('drag and drop', dataUrl, Math.round(imgWidth * scale), Math.round(imgHeight * scale), (existing && existing.position) || position, ideaId, metaData);
-			},
+			const scaleX = Math.min(imgWidth, 300) / imgWidth,
+				scaleY = Math.min(imgHeight, 300) / imgHeight,
+				scale = Math.min(scaleX, scaleY),
+				existing = idea.getAttrById(ideaId, 'icon');
+			self.setIcon('drag and drop', dataUrl, Math.round(imgWidth * scale), Math.round(imgHeight * scale), (existing && existing.position) || position, ideaId, metaData);
+		},
 			addNew = function () {
 				idea.startBatch();
 				const newId = addSubIdea(currentlySelectedIdeaId);
@@ -1297,14 +1357,14 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 					secondaryEdge = isRightHalf(node, rootNode) ? 'right' : 'left',
 					siblingBoundary = function (siblings, side) {
 						const tops = _.map(siblings, function (node) {
-								return node.y;
-							}),
+							return node.y;
+						}),
 							bottoms = _.map(siblings, function (node) {
 								return node.y + node.height;
 							}),
 							result = {
-								'minY': _.min(tops) -  reorderMargin - node.height,
-								'maxY': _.max(bottoms) +  reorderMargin,
+								'minY': _.min(tops) - reorderMargin - node.height,
+								'maxY': _.max(bottoms) + reorderMargin,
 								'margin': reorderMargin
 							};
 						result.edge = side;
@@ -1317,8 +1377,8 @@ module.exports = function MapModel(selectAllTitles, defaultReorderMargin, option
 					},
 					parentBoundary = function (side) {
 						const result = {
-							'minY': parentNode.y -  reorderMargin - node.height,
-							'maxY': parentNode.y + parentNode.height +  reorderMargin,
+							'minY': parentNode.y - reorderMargin - node.height,
+							'maxY': parentNode.y + parentNode.height + reorderMargin,
 							'margin': reorderMargin
 						};
 						result.edge = side;
