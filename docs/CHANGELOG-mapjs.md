@@ -1,5 +1,9 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.16
+
+- Move environment variables from `scripts/mapjs.env` to external file to simplify git bisect process.
+
 ## mapjs 3.3.15
 
 - Enable cut/copy/paste:
