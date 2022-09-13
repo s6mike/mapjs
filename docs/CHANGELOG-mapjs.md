@@ -1,5 +1,9 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.17
+
+- `src/browser/link-edit-widget.js`: Fix error message when clicking delete link button when no link selected.
+
 ## mapjs 3.3.16
 
 - Move environment variables from `scripts/mapjs.env` to external file to simplify git bisect process.

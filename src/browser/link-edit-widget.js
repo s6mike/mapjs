@@ -25,6 +25,9 @@ jQuery.fn.linkEditWidget = function (mapModel) {
 			element.hide();
 		});
 		element.find('.delete').click(function () {
+			if (!currentLink) { // Added check to stop error message when delete link button clicked without any link selected.
+				return false; 
+			}
 			mapModel.removeLink('mouse', currentLink.ideaIdFrom, currentLink.ideaIdTo);
 			element.hide();
 		});
