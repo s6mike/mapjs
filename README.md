@@ -5,8 +5,7 @@ MindMup is a zero-friction mind map canvas. Our aim is to create the most produc
 This project is the JavaScript visualisation portion of MindMup. It provides a canvas for users to create and edit
 mind maps in a browser. You can see an example of this live at [mindmup.com](http://www.mindmup.com), or play with the library directly in the browser using `test/index.html` from this project.
 
-This project is relatively stand alone and you can use it to create a nice mind map visualisation separate from the
-[MindMup Server](https://www.mindmup.com).
+This project is relatively stand alone and you can use it to create a nice mind map visualisation separate from the [MindMup Server](https://www.mindmup.com).
 
 ## Using MAPJS standalone
 
@@ -53,6 +52,9 @@ You can activate multiple nodes at once, these are highlighted with a dotted lin
 `shift+return`| Add node above
 `shift+tab`| Add node left
 `tab` `insert` | Add node right
+`ctrl+click` | Select clicked node
+`shift+click` | Activate clicked node
+`alt+click` | Add link to clicked node
 `down`| Select node below
 `up`| Select node above
 `left`| Select node left
@@ -68,7 +70,7 @@ You can activate multiple nodes at once, these are highlighted with a dotted lin
 `c meta+x ctrl+x` | Cut
 `p meta+v ctrl+v` | Paste
 `y meta+c ctrl+c` | Copy
-`ctrl+shift+v meta+shift+v` | Paste Style
+`ctrl+shift+v meta+shift+v` | Paste Style (custom colours)
 `f` `/` | Toggle collapse / reveal
 `u` `meta+z` `ctrl+z` | Undo
 `r` `meta+shift+z` `ctrl+shift+z` `meta+y` `ctrl+y`| Redo

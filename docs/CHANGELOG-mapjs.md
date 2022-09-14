@@ -1,8 +1,20 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.19
+
+- Edit Link Menu/Widget:
+  - `src/browser/link-edit-widget.js`:
+    - Fix Line Style picklist.
+    - Not visible on initial page load.
+    - Does not disappear after mouse over.
+  - `src/core/content/content.js`: New links are red, not grey.
+  - `test/example-map.json`: Change link colour from '#FF0000' to 'red' so that editLink color picklist value set correctly when selecting link.
+  - `test/index.html`: Update `#testcontrols` style so editLink widget/menu not partially hidden.
+- [README.md](../README.md): Add mouse click related keyboard shortcuts.
+
 ## mapjs 3.3.18
 
-Fix add link button.
+- Fix add link button.
 
 ## mapjs 3.3.17
 
@@ -16,18 +28,18 @@ Fix add link button.
 
 - Enable cut/copy/paste:
   - Undo changes made in commit 'remove internal clipboard, to be replaced with browser clipboard actions' (925dc863d260f2d02c65f490617ebd328be8553).
-  - [README.md](README.md): Add keyboard shortcuts for cut/copy/paste.
+  - [README.md](../README.md): Add keyboard shortcuts for cut/copy/paste.
 
 ## mapjs 3.3.14
 
 - `src/browser/dom-map-widget.js`:
   - Add missing keyboard shortcuts (hotkeyEventHandlers) for zoom in/out/reset, from commit 'connector removed, node removed' (75d00a37c585a0c564ff30b493078db80bc6b40e).
     - Add comment for copy/cut/paste, since functions have since been removed from codebase.
-    - [README.md](README.md): Add keyboard shortcuts for zoom.
+    - [README.md](../README.md): Add keyboard shortcuts for zoom.
 
 ## mapjs 3.3.13
 
-- [README.md](README.md):
+- [README.md](../README.md):
   - Add table listing keyboard shortcuts.
   - Fix lint issues (from [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)).
 
