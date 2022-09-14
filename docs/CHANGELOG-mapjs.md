@@ -1,5 +1,9 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.18
+
+Fix add link button.
+
 ## mapjs 3.3.17
 
 - `src/browser/link-edit-widget.js`: Fix error message when clicking delete link button when no link selected.
