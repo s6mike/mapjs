@@ -1,5 +1,9 @@
 # Mapjs Project Change Log
 
+## mapjs 3.3.20
+
+- Add jasmine test outputs to `docs/` folder.
+
 ## mapjs 3.3.19
 
 - Edit Link Menu/Widget:
