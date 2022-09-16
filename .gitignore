@@ -10,4 +10,5 @@ SpecRunner.html
 .sublime*
 .tern-port
 npm-debug.log
-package-lock.json
+test/bundle*
+examples/assets/webpack-bundle.js

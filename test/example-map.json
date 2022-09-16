@@ -131,7 +131,7 @@
       "ideaIdTo": 5,
       "attr": {
         "style": {
-          "color": "#FF0000",
+          "color": "red",
           "lineStyle": "solid",
           "arrow": true
         }
